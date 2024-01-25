@@ -1,10 +1,13 @@
 # Projekt docker-simple
 
+_(projekt powstał na potrzeby własne, ale oczywiście wszystkie uwagi jak najbardziej mile widziane)_
+
 Projekt ma kilka konfiguracji. Zawartość każdej z nich i sposób uruchomienia - poniżej.
 
 <hr>
 
 ### NGINX + PHP:
+
 Wersję PHP można zmienić w pliku config/NGINX.PHP.Dockerfile.
 
 ````
@@ -16,6 +19,7 @@ Strona dostępna pod adresem [127.0.0.1](http://127.0.0.1)
 <hr>
 
 ### NGINX + PHP + MySQL
+
 Wersję PHP można zmienić w pliku config/NGINX.PHP.MySQL.Dockerfile.
 
 ````

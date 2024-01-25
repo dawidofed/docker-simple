@@ -1,1 +1,4 @@
 .idea
+
+/data/logs/nginx/access.log
+/data/logs/nginx/error.log
