@@ -19,3 +19,6 @@
 /data/redis/*
 !/data/redis/.htaccess
 
+/data/redis-config/*
+!/data/redis-config/.htaccess
+

@@ -63,7 +63,7 @@ services:
     image: phpmyadmin/phpmyadmin:latest
     restart: always
     ports:
-      - "8081:80"
+      - "8082:80"
     environment:
       PMA_USER: root
       PMA_PASSWORD: password123
@@ -108,7 +108,7 @@ services:
       - docker-simple
 
   redis:
-    image: redis:6.2-alpine
+    image: redis:6.2.5
     container_name: redis
     restart: always
     ports:
@@ -116,6 +116,25 @@ services:
     command: redis-server --save 20 1 --loglevel warning --requirepass eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
     volumes:
       - ./data/redis:/data
+    links:
+      - redis-commander
+    networks:
+      - docker-simple
+
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    restart: always
+    environment:
+      REDIS_HOSTS: redis
+      REDIS_HOST: redis
+      REDIS_PORT: redis:6379
+      REDIS_PASSWORD: eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
+      HTTP_USER: root
+      HTTP_PASSWORD: root
+    ports:
+      - "8081:8081"
+    networks:
+      - docker-simple
 
 #  api:
 #    container_name: quotes-api
@@ -148,6 +167,7 @@ networks:
   docker-simple:
 
 #volumes:
+#  redis:
 #  esdata1:
 #    driver: local
 #  esdata2:
