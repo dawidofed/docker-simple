@@ -1,33 +1,50 @@
-version: '3'
+version: '3.7'
 
 services:
   web:
+    container_name: nginx
     image: nginx:latest
     ports:
       - "80:80"
     volumes:
       - ./config/nginx.php.mysql.conf:/etc/nginx/conf.d/nginx.conf
       - ./app:/app
+      - ./data:/data
   php:
+    container_name: php
     build:
       context: .
       dockerfile: ./config/NGINX.PHP.MySQL.Dockerfile
-    # image: php:fpm # latest
-    # image: php:7.4-fpm
-    #image: php:7.3-fpm
-    #image: php:8.0-fpm
     volumes:
       - ./app:/app
+      - ./data:/data
   mysql:
+    container_name: mysql
     image: mariadb:latest
+    restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: 'secret'
-      MYSQL_USER: 'tutorial'
-      MYSQL_PASSWORD: 'secret'
-      MYSQL_DATABASE: 'tutorial'
+      MYSQL_ROOT_PASSWORD: password123
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password123
     volumes:
       - mysqldata:/var/lib/mysql
+    expose:
+      - "3306"
     ports:
-      - 3306:3306
+      - "3306"
+  phpmyadmin:
+    container_name: phpmyadmin
+    links:
+      - mysql
+    image: phpmyadmin/phpmyadmin:latest
+    restart: always
+    ports:
+      - "8081:80"
+    environment:
+      PMA_USER: root
+      PMA_PASSWORD: password123
+      PMA_HOST: mysql
+      PMA_ARBITRARY: 1
+
 volumes:
-  mysqldata: {}
+  mysqldata:

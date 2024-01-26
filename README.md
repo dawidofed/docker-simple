@@ -18,7 +18,7 @@ Strona dostępna pod adresem [127.0.0.1](http://127.0.0.1)
 
 <hr>
 
-### NGINX + PHP + MySQL
+### NGINX + PHP + MySQL + PhpMyAdmin
 
 Wersję PHP można zmienić w pliku config/NGINX.PHP.MySQL.Dockerfile.
 
@@ -27,3 +27,5 @@ docker-compose -f docker-compose-nginx-php-mysql.yml up
 ````
 
 Strona dostępna pod adresem [127.0.0.1](http://127.0.0.1)
+PhpMyAdmin - [127.0.0.1:8081](http://127.0.0.1:8081)
+
