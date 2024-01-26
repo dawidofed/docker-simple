@@ -8,7 +8,7 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ./config/nginx.php.mysql.conf:/etc/nginx/conf.d/nginx.conf
+      - ./config/nginx.conf:/etc/nginx/conf.d/nginx.conf
       - ./app:/app
       - ./data:/data
     networks:
@@ -24,7 +24,7 @@ services:
     container_name: php
     build:
       context: .
-      dockerfile: ./config/NGINX.PHP.MySQL.Dockerfile
+      dockerfile: ./config/PHP.Dockerfile
     volumes:
       - ./app:/app
       - ./data:/data
@@ -72,8 +72,46 @@ services:
     networks:
       - docker-simple
 
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.4.2
+    container_name: elasticsearch
+    environment:
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ./data/elasticsearch:/usr/share/elasticsearch/data
+    ports:
+      - "9200:9200"
+    networks:
+      - docker-simple
+  elasticsearch2:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.4.2
+    container_name: elasticsearch2
+    environment:
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "discovery.zen.ping.unicast.hosts=elasticsearch"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ./data/elasticsearch:/usr/share/elasticsearch/data
+    networks:
+      - docker-simple
+
 networks:
   docker-simple:
 
 #volumes:
+#  esdata1:
+#    driver: local
+#  esdata2:
+#    driver: local
 #  mysqldata:

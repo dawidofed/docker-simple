@@ -2,10 +2,11 @@
 
 _(projekt powstał na potrzeby własne, ale oczywiście wszystkie uwagi jak najbardziej mile widziane)_
 
-Projekt ma kilka konfiguracji. Zawartość każdej z nich i sposób uruchomienia - poniżej.
-
 <hr>
 
+Zawartość dockera:
+- NGINX
+- PHP
 ### NGINX + PHP:
 Wersję PHP można zmienić w pliku config/NGINX.PHP.Dockerfile.
 ````

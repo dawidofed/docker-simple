@@ -4,8 +4,12 @@
 /data/logs/nginx/error.log
 /data/logs/mysql/*
 !/data/logs/mysql/.htaccess
-/data/mysql/*
-!/data/mysql/.htaccess
 /data/logs/php/*
 !/data/logs/php/.htaccess
+
+/data/mysql/*
+!/data/mysql/.htaccess
+
+/data/elasticsearch/*
+!/data/elasticsearch/.htaccess
 
