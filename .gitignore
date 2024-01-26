@@ -13,3 +13,9 @@
 /data/elasticsearch/*
 !/data/elasticsearch/.htaccess
 
+/data/api/*
+!/data/api/.htaccess
+
+/data/redis/*
+!/data/redis/.htaccess
+
