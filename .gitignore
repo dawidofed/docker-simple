@@ -2,3 +2,10 @@
 
 /data/logs/nginx/access.log
 /data/logs/nginx/error.log
+/data/logs/mysql/*
+!/data/logs/mysql/.htaccess
+/data/mysql/*
+!/data/mysql/.htaccess
+/data/logs/php/*
+!/data/logs/php/.htaccess
+
