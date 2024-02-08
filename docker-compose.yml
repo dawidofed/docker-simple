@@ -86,26 +86,45 @@ services:
     volumes:
       - ./data/elasticsearch:/usr/share/elasticsearch/data
     ports:
-      - 9200:9200
+      - "9200:9200"
     networks:
       - docker-simple
+#
+#  elasticsearch2:
+#    image: docker.elastic.co/elasticsearch/elasticsearch:6.4.2
+#    container_name: elasticsearch2
+#    environment:
+#      - cluster.name=docker-cluster
+#      - bootstrap.memory_lock=true
+#      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+#      - "discovery.zen.ping.unicast.hosts=elasticsearch"
+#    ulimits:
+#      memlock:
+#        soft: -1
+#        hard: -1
+#    volumes:
+#      - ./data/elasticsearch:/usr/share/elasticsearch/data
+#    networks:
+#      - docker-simple
 
-  elasticsearch2:
-    image: docker.elastic.co/elasticsearch/elasticsearch:6.4.2
-    container_name: elasticsearch2
-    environment:
-      - cluster.name=docker-cluster
-      - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-      - "discovery.zen.ping.unicast.hosts=elasticsearch"
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-    volumes:
-      - ./data/elasticsearch:/usr/share/elasticsearch/data
-    networks:
-      - docker-simple
+  # See https://elk-docker.readthedocs.io/
+  # For viewing through elastic search JSON display, navigate to: http://127.0.0.1:9200/_search?pretty
+#  elasticsearch:
+#    image: sebp/elk
+#    hostname: elasticsearch.local
+#    container_name: elasticsearch
+#    ports:
+#      - "5601:5601" # Kibana web interface
+#      - "9200:9200" # Elasticsearch JSON interface
+#      - "9300:9300" # Elasticsearch Transport interface
+#      - "5044:5044" # Logstash Beats interface
+#    environment:
+#      HOSTNAME: elasticsearch.local
+#      MAX_MAP_COUNT: 262144
+#    volumes:
+#      - ./data/elasticsearch:/usr/share/elasticsearch/data
+#    networks:
+#      - docker-simple
 
   redis:
     image: redis:6.2.5
@@ -123,6 +142,7 @@ services:
 
   redis-commander:
     image: rediscommander/redis-commander:latest
+    container_name: redis-commander
     restart: always
     environment:
       REDIS_HOSTS: redis
@@ -133,6 +153,18 @@ services:
       HTTP_PASSWORD: root
     ports:
       - "8081:8081"
+    networks:
+      - docker-simple
+
+    # See https://github.com/djfarrelly/MailDev/blob/master/docs/docker.md
+  maildev:
+    image: djfarrelly/maildev
+    container_name: maildev
+    #hostname: maildev.local
+    ports:
+      - "8002:80"
+    environment:
+      HOSTNAME: maildev.local
     networks:
       - docker-simple
 

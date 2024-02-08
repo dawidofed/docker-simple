@@ -11,6 +11,7 @@ Zawartość dockera:
 - Elasticsearch
 - Redis
 - Redis-Commander
+- Maildev
 
 <hr>
 
@@ -29,6 +30,7 @@ mariadb -uroot -p
 - Strona: [127.0.0.1](http://127.0.0.1)
 - PhpMyAdmin [127.0.0.1:8082](http://127.0.0.1:8082)
 - Elasticsearch: [127.0.0.1:9200](http://127.0.0.9200)
-- Redis-Commander: [127.0.0.1:8081/](http://127.0.0.1:8081)
-
+- Redis-Commander: [127.0.0.1:8081](http://127.0.0.1:8081)
+- Maildev: [127.0.0.1:8002](http://127.0.0.1:8002)
+- 
 <hr>
