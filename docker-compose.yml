@@ -1,7 +1,12 @@
 version: '3.7'
 
 services:
-  web:
+
+##
+# NGINX section
+# (depends on config/nginx.conf)
+##
+  nginx:
     container_name: nginx
     image: nginx:latest
     ports:
@@ -11,15 +16,19 @@ services:
       - ./config/nginx.conf:/etc/nginx/conf.d/nginx.conf
       - ./app:/app
       - ./data:/data
-    networks:
-      - docker-simple
     links:
       - php
-      - mysql
+      - mariadb
     depends_on:
       - php
-      - mysql
+      - mariadb
+    networks:
+      - docker-simple
 
+##
+# PHP section
+# (depends on config/PHP.Dockerfile
+##
   php:
     container_name: php
     build:
@@ -29,66 +38,107 @@ services:
       - ./app:/app
       - ./data:/data
       - ./data/logs/php:/var/log
+    links:
+      - mariadb
+    depends_on:
+      - mariadb
     networks:
       - docker-simple
-    links:
-      - mysql:mysql
-    depends_on:
-      - mysql
 
-  mysql:
-    container_name: mysql
-    image: mariadb:latest
+##
+# DB section
+##
+  mariadb:
+    container_name: mariadb
+    image: mariadb:10.5 #latest
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: password123
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password123
+      MARIADB_ROOT_PASSWORD: password123
+      MARIADB_USER: user
+      MARIADB_PASSWORD: password123
+#      MYSQL_ROOT_PASSWORD: password123
+#      MYSQL_USER: user
+#      MYSQL_PASSWORD: password123
+    ports:
+      - "3306:3306"
+    expose:
+      - "3306"
     volumes:
-      - ./data/mysql:/var/lib/mysql
+#      - ./data/mysql:/var/lib/mysql
       - ./data/logs/mysql:/var/log/mysql
     networks:
       - docker-simple
-    expose:
-      - "3306"
-    ports:
-      - "3306"
 
-  phpmyadmin:
-    container_name: phpmyadmin
-    links:
-      - mysql
-    depends_on:
-      - mysql
-    image: phpmyadmin/phpmyadmin:latest
+  postgres:
+    image: postgres
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: kisphp
+      POSTGRES_USER: root
+      POSTGRES_NAME: kisphp
+    ports:
+      - "5432:5432"
+    expose:
+      - "5432"
+    volumes:
+      - ./postgres:/var/lib/postgresql/data
+    networks:
+      - docker-simple
+
+##
+# DB GUI section
+##
+  adminer:
+    image: adminer
+    container_name: adminer
     restart: always
     ports:
-      - "8082:80"
-    environment:
-      PMA_USER: root
-      PMA_PASSWORD: password123
-      PMA_HOST: mysql
-      PMA_ARBITRARY: 1
+      - "8080:8080"
+    depends_on:
+      - postgres
+      - mariadb
     networks:
       - docker-simple
 
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:6.4.2
-    container_name: elasticsearch
-    environment:
-      - cluster.name=docker-cluster
-      - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-    volumes:
-      - ./data/elasticsearch:/usr/share/elasticsearch/data
-    ports:
-      - "9200:9200"
-    networks:
-      - docker-simple
+#  phpmyadmin:
+#    image: phpmyadmin/phpmyadmin:latest
+#    container_name: phpmyadmin
+#    links:
+#      - mariadb
+#    depends_on:
+#      - mariadb
+#    restart: always
+#    ports:
+#      - "8082:80"
+#    environment:
+#      PMA_USER: root
+#      PMA_PASSWORD: password123
+#      PMA_HOST: mariadb
+#      PMA_ARBITRARY: 1
+#    networks:
+#      - docker-simple
+
+##
+# Elasticsearch section
+##
+#  elasticsearch:
+#    image: docker.elastic.co/elasticsearch/elasticsearch:6.4.2
+#    container_name: elasticsearch
+#    environment:
+#      - cluster.name=docker-cluster
+#      - bootstrap.memory_lock=true
+#      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+#    ulimits:
+#      memlock:
+#        soft: -1
+#        hard: -1
+#    volumes:
+#      - ./data/elasticsearch:/usr/share/elasticsearch/data
+#    ports:
+#      - "9200:9200"
+#    networks:
+#      - docker-simple
 #
 #  elasticsearch2:
 #    image: docker.elastic.co/elasticsearch/elasticsearch:6.4.2
@@ -126,6 +176,9 @@ services:
 #    networks:
 #      - docker-simple
 
+##
+# Redis section
+##
   redis:
     image: redis:6.2.5
     container_name: redis
@@ -134,7 +187,7 @@ services:
       - "6379:6379"
     command: redis-server --save 20 1 --loglevel warning --requirepass eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
     volumes:
-      - ./data/redis:/data
+      - ./data/redis:/var/lib/redis
     links:
       - redis-commander
     networks:
@@ -156,11 +209,14 @@ services:
     networks:
       - docker-simple
 
-    # See https://github.com/djfarrelly/MailDev/blob/master/docs/docker.md
+##
+# Mail-catcher section
+##
+  # See https://github.com/djfarrelly/MailDev/blob/master/docs/docker.md
   maildev:
     image: djfarrelly/maildev
     container_name: maildev
-    #hostname: maildev.local
+    restart: always
     ports:
       - "8002:80"
     environment:
