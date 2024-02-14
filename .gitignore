@@ -1,5 +1,7 @@
 .idea
 
+/app/*
+
 /data/logs/nginx/access.log
 /data/logs/nginx/error.log
 /data/logs/mysql/*
@@ -9,6 +11,8 @@
 
 /data/mysql/*
 !/data/mysql/.htaccess
+
+/data/postgres/*
 
 /data/elasticsearch/*
 !/data/elasticsearch/.htaccess
@@ -21,4 +25,7 @@
 
 /data/redis-config/*
 !/data/redis-config/.htaccess
+
+/data/grafana/*
+!/data/grafana/.htaccess
 

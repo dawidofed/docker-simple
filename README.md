@@ -12,6 +12,8 @@ Zawartość dockera:
 - Redis
 - Redis-Commander
 - Maildev
+- Grafana
+- Adminer (for MySQL or PostgreSQL)
 
 <hr>
 
@@ -30,8 +32,8 @@ mariadb -uroot -p
 - Strona: [127.0.0.1](http://127.0.0.1)
 - PhpMyAdmin [127.0.0.1:8082](http://127.0.0.1:8082)
 - Adminer [127.0.0.1:6080](http://127.0.0.1:6080)
-MariaDB: root/password123
-PostgreSQL: root/password123
+MariaDB (host: mariadb:3306): root/password123
+PostgreSQL (host: postgres:5432): root/kisphp
 - Elasticsearch: [127.0.0.1:9200](http://127.0.0.9200)
 - Redis: [127.0.0.1:8081](http://127.0.0.1:8081)
 - Maildev: [127.0.0.1:8002](http://127.0.0.1:8002)
