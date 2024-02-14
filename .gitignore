@@ -1,7 +1,5 @@
 .idea
 
-/app/*
-
 /data/logs/nginx/access.log
 /data/logs/nginx/error.log
 /data/logs/mysql/*
@@ -29,3 +27,4 @@
 /data/grafana/*
 !/data/grafana/.htaccess
 
+/app/
