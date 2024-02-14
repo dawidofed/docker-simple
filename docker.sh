@@ -1,5 +1,14 @@
 #!/bin/bash
 
+log_message()
+{
+  LOG_PREFIX="[$(date '+%Y-%m-%d %H:%M:%S')]"
+  MESSAGE=$1
+  echo "-------------------------------------------------------"
+  echo "$LOG_PREFIX $MESSAGE"
+  echo "-------------------------------------------------------"
+}
+
 check_errors()
 {
   EXITCODE=$1
