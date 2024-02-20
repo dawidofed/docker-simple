@@ -39,3 +39,7 @@ PostgreSQL (host: postgres:5432): root/kisphp
 - Maildev: [127.0.0.1:8002](http://127.0.0.1:8002)
 - 
 <hr>
+
+TODO w przyszłości:
+
+- Greylog

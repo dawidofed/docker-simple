@@ -9,6 +9,8 @@ do
   sudo netstat -tulpn | grep :$port
 done
 
+
+
 printf "\n"
 printf "W ostatniej kolumnie wskazane są PID usług, które należy zatrzymać, aby docker poprawnie się uruchomił.\n"
 printf "Można do tego użyć polecenia 'kill <PID>, aczkolwiek ze względów bezpieczeństwa lepiej użyć polecenia 'sudo systemctl stop <SERVICE_NAME>'\n"

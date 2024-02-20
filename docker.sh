@@ -13,7 +13,7 @@ check_errors()
 {
   EXITCODE=$1
   if [[ ${EXITCODE} -ne 0 ]]; then
-    log_message "ERROR: jest kilka błędów, sprawdź wyjście, aby poznać szczegóły. Wciśnij ENTER, aby kontynuować, albo Ctrl+C aby zattrzymać."
+    log_message "ERROR: jest kilka błędów, sprawdź wyjście, aby poznać szczegóły. Wciśnij ENTER, aby kontynuować, albo Ctrl+C aby zatrzymać."
     read
   fi
 }
@@ -105,6 +105,7 @@ helper()
   $0 stop          - zatrzymywanie kontenerów
   $0 restart       - restart kontenerów
   $0 restart_hard  - twardy restart, wraz z 'down'
+  $0 down          - zamknięcie i usunięcie kontenerów
 
   $0 build         - budowanie kontenerów
   $0 rebuild       - przebudowanie kontenerów
@@ -123,6 +124,7 @@ case ${DOCKER_COMMAND} in
   stop) stop;;
   restart) restart;;
   restart_hard) restart_hard;;
+  down) down;;
   build) build;;
   rebuild) rebuild;;
   log) log;;

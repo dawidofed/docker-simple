@@ -34,7 +34,7 @@ services:
   php:
     container_name: php
     build:
-      context: config
+      context: .
       dockerfile: config/php/PHP.Dockerfile
     volumes:
       - ./app:/app
