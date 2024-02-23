@@ -37,9 +37,11 @@ PostgreSQL (host: postgres:5432): root/kisphp
 - Elasticsearch: [127.0.0.1:9200](http://127.0.0.9200)
 - Redis: [127.0.0.1:8081](http://127.0.0.1:8081)
 - Maildev: [127.0.0.1:8002](http://127.0.0.1:8002)
-- 
+
 <hr>
 
 TODO w przyszłości:
 
 - Greylog
+
+UWAGA: używasz na własną odpowiedzialność. :)
