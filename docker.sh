@@ -43,7 +43,7 @@ down()
 
 build()
 {
-  log_message "Budowanie komtenerów..."
+  log_message "Budowanie kontenerów..."
   docker-compose build
   check_errors $?
 }
